@@ -12,7 +12,7 @@
 void getData(int B[], int n)
 {
     printf(" ");
-    for (int i; i < n; i++)
+    for (int i=0; i < n; i++)
     {
         scanf("%d", B + i);
     }
