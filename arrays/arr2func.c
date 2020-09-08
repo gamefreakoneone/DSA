@@ -1,20 +1,20 @@
 #include <stdio.h>
 
-// int* fun(int *arr)
-// {
-//     /* Some operations on arr[] */
-//     arr[0] = 10;
-//     arr[1] = 20;
+int* fun(int *arr)
+{
+    /* Some operations on arr[] */
+    arr[0] = 10;
+    arr[1] = 20;
 
-//     return arr;
-// }
+    return arr;
+}
 
 void getData(int B[], int n)
 {
     printf(" ");
     for (int i=0; i < n; i++)
     {
-        scanf("%d", B + i);
+        scanf("%d", B + i); // B=i == &B[i-]
     }
 }
 
@@ -34,7 +34,7 @@ int main()
     printf("Here are the elements:\n");
     putData(arr, 5);
 
-    // int* ptr = fun(arr);
-    // printf("%d %d", ptr[0], ptr[1]);
+    int* ptr = fun(arr);
+    printf("%d %d", *ptr, *(ptr+1));
     return 0;
 }
