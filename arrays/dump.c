@@ -27,6 +27,10 @@ void sort(int *arr, int size){
     
 }
 
+void insert(){
+    
+}
+
 int main(){
     int size;
     printf("Give me the size of the array:\n");
