@@ -15,13 +15,16 @@ Node * Create(Node *Start){
     int c=1;
     while (c!=0)
     {
+        
         newnode=(struct node *)malloc(sizeof(struct node));
         printf("Give me the value\n");
         scanf("%d",&newnode->data);
-        if (Start =NULL)
+        if (Start == NULL)
         {
+            printf("Newnode time!");
             Start=newnode;
         }else{
+            printf("Turning over");
             previous->next=newnode;
             previous=newnode;
         }
@@ -46,6 +49,5 @@ void main(){
     Start = (struct node *)malloc(sizeof(struct node));
     Start=Create(Start);
     display(Start);
-
-
+    p
 }
