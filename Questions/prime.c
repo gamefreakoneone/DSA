@@ -15,7 +15,6 @@ void prime( int hrange){
     {
         printf("%d is a prime number\n",hrange);
     }
-    
 }
 
 int main(){
