@@ -8,11 +8,10 @@ typedef struct polynode
     struct polynode * next; //next
 } Node;
 
-
-Node * create(Node *){
-
+Node * create(Node* name){
+    printf("Hello");
+    return name;
 }
-
 int main(){
 
 }
