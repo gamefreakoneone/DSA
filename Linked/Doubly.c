@@ -78,8 +78,8 @@ Node * insert_between(Node *Start){
     }
     newnode->next=after;
     after->prev=newnode;
-    previous->next=newnode;
     newnode->prev=previous;
+    previous->next=newnode;
 
     return Start;
 }
