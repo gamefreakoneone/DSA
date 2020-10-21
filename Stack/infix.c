@@ -1,19 +1,18 @@
 #include<stdio.h>
 #include<stdlib.h>
-#include<string.h>
 #include<ctype.h>
+#define MAX 20
 
-
-typedef struct stack
+typedef struct stacks
 {
-    float data[MAX];
+    int data[MAX];
     int top;
-} Stacks;
+} Stack;
 
-
-float evaluate(char exp[]);
-void push(struct stack *s, float n);
-float pop(struct stack *s);
+typedef struct characters{
+    char data[MAX];
+    int top;
+} Operators;
 
 void push(struct stack *s, float n){
     printf("Pushing %f\n",n);
@@ -37,5 +36,35 @@ float pop(struct stack *s){
     return n;
 }
 
+int Empty(Operators operators){
 
+}
+
+int main(){
+    printf("Give the infix expression:\n");
+    char exp[MAX];
+    scanf("%s",exp);
+    Stack numbers;
+    numbers.top=-1;
+    Operators operators;
+    operators.top=-1;
+    for (int i = 0; exp[i] != "\0"; i++)
+    {
+        char symbol= exp[i];
+        if (isdigit(symbol))
+        {
+            printf("%s is a digit");
+            push(&numbers, symbol);
+        }else
+        {
+             if ()
+             {
+                 /* code */
+             }
+             
+        }
+        
+        
+    }
     
+}

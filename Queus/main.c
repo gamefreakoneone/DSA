@@ -10,12 +10,13 @@ typedef struct Queue{
 
 void enque(Que *q, int item){
     printf("Enqueing \n");
-    if(q->rear=MAX-1){
+    if(q->rear==MAX-1){
         printf("Overflow\n");
         return;
     }
-    q->rear=q->rear+1;
     q->data[q->rear]=item;
+    
+    q->rear++;
     return;
 }
 
@@ -24,6 +25,7 @@ int deque(Que *q){
         printf("underflow");
         return -1;
     }
+    printf("\n Dequing");
     int item = q->data[q->front];
     q->front=q->front+1;
     return item;
@@ -31,20 +33,29 @@ int deque(Que *q){
 
 void display(Que *q){
     int limit = q->rear;
-    for (int i = 0; i < limit; i++)
+    for (int i = q->front; i < limit; i++)
     {
         printf(" %d ",q->data[i]);
     }
     return;
 }
 
+void initializ(Que *q){
+    q->front=0;
+    q->rear=0;
+}
+
 int main(){
     printf("Main function\n");
     Que q;
-    q.front=-1;
-    q.rear=-1;
+    initializ(&q);
     enque(&q,1);
     enque(&q,2);
     enque(&q,3);
+    display(&q);
+    int a = deque(&q);
+    printf(" %d \n",a);
+    int b = deque(&q);
+    printf(" %d \n",b);
     display(&q);
 }
