@@ -9,47 +9,74 @@ typedef struct node
 
 int num;
 
-Node* test(Node *start)
-{
-    struct node *newnode,*previous; //check
-    newnode=NULL;
-    previous=NULL;
-    
-    int c=1;
 
-    printf("\nEnter Data [Type 0 to exit] > ");
-    scanf("%d",&c);
-
-    while (c!=0)
+Node * delete_parts(Node * Start,int post, int nodes){
+    Node * previous =Start,*position=Start, *Inter =NULL;
+    int start =0, inter =1,placeholder=0;
+    while (inter<post)
     {
-        newnode=(struct node*)malloc(sizeof(struct node));
-        newnode->data=c;
-        
-        if (start==NULL)
-        {
-            newnode->next=NULL;
-            start = newnode;
-        }else
-        {
-            previous=start;
-            printf("\nThe data for the nodes in linked list are > ");
-            while(previous->next!=NULL)
-            {
-                printf(" %d",previous->data);
-                previous=previous->next;
-            }
-            printf(" %d",previous->data);
-                
-            printf("\nAdding a new node at the end %d",newnode->data);
-                
-            previous->next = newnode;
-            newnode->next=NULL;
+        position=position->next;
+        inter++;
+        if(placeholder==0){
+            placeholder++;
+            continue;
         }
-        printf("\n\nEnter Data [Type 0 to exit] > ");
-        scanf("%d",&c);
+        previous=previous->next;
     }
-    return start;
+
+    while (start<nodes)
+    {
+        Inter = position;
+        position=position->next;
+        previous->next=position;
+        Inter->next=NULL;
+        free(Inter);
+        start=start+1;
+    }
+return Start;
 }
+
+// Node* test(Node *start)
+// {
+//     struct node *newnode,*previous; //check
+//     newnode=NULL;
+//     previous=NULL;
+    
+//     int c=1;
+
+//     printf("\nEnter Data [Type 0 to exit] > ");
+//     scanf("%d",&c);
+
+//     while (c!=0)
+//     {
+//         newnode=(struct node*)malloc(sizeof(struct node));
+//         newnode->data=c;
+        
+//         if (start==NULL)
+//         {
+//             newnode->next=NULL;
+//             start = newnode;
+//         }else
+//         {
+//             previous=start;
+//             printf("\nThe data for the nodes in linked list are > ");
+//             while(previous->next!=NULL)
+//             {
+//                 printf(" %d",previous->data);
+//                 previous=previous->next;
+//             }
+//             printf(" %d",previous->data);
+                
+//             printf("\nAdding a new node at the end %d",newnode->data);
+                
+//             previous->next = newnode;
+//             newnode->next=NULL;
+//         }
+//         printf("\n\nEnter Data [Type 0 to exit] > ");
+//         scanf("%d",&c);
+//     }
+//     return start;
+// }
 
 Node *create(Node *Start){
     struct node *newnode = NULL , *previous = NULL;
@@ -196,21 +223,24 @@ void main(){
     scanf("%d",&(Start->data));
     Start=create(Start);
     display(Start);
-    Start=InertBegin(Start);
-    display(Start);
-    Start=Insertlast(Start);
-    display(Start);
-    Start=InsertPart(Start);
-    display(Start);
-    Start=deleteFirst(Start);
-    printf("Deleting the fiest element:\n");
     printf("\n");
+    Start=delete_parts(Start,2,4);
     display(Start);
-    Start=deleteLast(Start);
-    printf("Deleting the last element!");
-    printf("\n");
-    display(Start);
-    Start=deletePart(Start);
-    printf("\n");
-    display(Start);
+    // Start=InertBegin(Start);
+    // display(Start);
+    // Start=Insertlast(Start);
+    // display(Start);
+    // Start=InsertPart(Start);
+    // display(Start);
+    // Start=deleteFirst(Start);
+    // printf("Deleting the fiest element:\n");
+    // printf("\n");
+    // display(Start);
+    // Start=deleteLast(Start);
+    // printf("Deleting the last element!");
+    // printf("\n");
+    // display(Start);
+    // Start=deletePart(Start);
+    // printf("\n");
+    //display(Start);
 }
