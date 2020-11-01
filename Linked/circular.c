@@ -156,6 +156,52 @@ void display(Node *Start){
     
 }
 
+// Node *delete_duplicates(Node *Start){
+//       printf("In the function!");
+//       int length=1;
+//       Node *inter;
+//       inter=Start->next;
+//       while (inter->next!=Start)
+//       {
+//           length++;
+//       }
+//       printf("\n %d \n",length);
+//     return Start;
+// }
+
+Node *delete_dupes(Node * Start){
+    int length=1;
+    Node *current ,*next_one,*Destroy;
+    current=Start;
+    while (current->next!=Start)
+    {
+        current=current->next;  
+        length=length+1;
+    }
+
+    current=Start;
+    next_one=current->next;
+    int limit=length*2,i=0;
+    while (i<limit)
+    {
+        if(current->data==next_one->data){
+            Destroy=next_one;
+            next_one=next_one->next;
+            current->next=next_one;
+            Destroy->next=NULL;
+            free(Destroy);
+        }else{
+            current=current->next;
+            next_one=next_one->next;
+            Destroy=NULL;
+        }
+        i++;
+    }
+    Start=current;
+    return Start;
+    
+}
+
 void main(){
     Node *Start=NULL;
     Start=(struct node*)malloc(sizeof(struct node));
@@ -164,21 +210,24 @@ void main(){
     scanf("%d",&(Start->data));
     Start=create(Start);
     display(Start);
-    Start=insert_beg(Start);
+    printf("Delete duplicates!\n");
+    Start=delete_dupes(Start);
     display(Start);
-    Start=insert_end(Start);
-    display(Start);
-    Start=InsertPart(Start);
-    display(Start);
-    Start=deleteFirst(Start);
-    printf("Deleting the fiest element:\n");
-    printf("\n");
-    display(Start);
-    Start=deleteLast(Start);
-    printf("Deleting the last element!");
-    printf("\n");
-    display(Start);
-    Start=deletePart(Start);
-    printf("\n");
-    display(Start);
+    // Start=insert_beg(Start);
+    // display(Start);
+    // Start=insert_end(Start);
+    // display(Start);
+    // Start=InsertPart(Start);
+    // display(Start);
+    // Start=deleteFirst(Start);
+    // printf("Deleting the fiest element:\n");
+    // printf("\n");
+    // display(Start);
+    // Start=deleteLast(Start);
+    // printf("Deleting the last element!");
+    // printf("\n");
+    // display(Start);
+    // Start=deletePart(Start);
+    // printf("\n");
+    // display(Start);
 }
