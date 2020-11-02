@@ -33,7 +33,6 @@ void display(Node *Start){
         current=current->next;
     }
     printf(" %d ",current->data);
-    
 }
 
 int main(){

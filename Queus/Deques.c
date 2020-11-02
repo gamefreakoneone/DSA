@@ -90,5 +90,5 @@ void output_deque(){
 
 void insert_right(){
     int val;
-    printf("")
+    printf("");
 }

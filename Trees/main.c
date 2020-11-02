@@ -23,6 +23,22 @@ void inorder(Node * root){
     }
 }
 
+void preorder(Node * root){
+    if(root!=NULL){
+        printf(" %d ",root->value);
+        preorder(root->left);
+        preorder(root->right);
+    }
+}
+
+void postorder(Node * root){
+    if(root!=NULL){
+        postorder(root->left);
+        postorder(root->right);
+        printf(" %d ",root->value);
+    }
+}
+
 int main(){
     Node * root;
     int values;
@@ -62,7 +78,13 @@ int main(){
         printf("Wanan continue:\n");
         scanf("%d",&c);
     }
-
+    printf("Preorder: ");
+    preorder(root);
+    printf("\n");
+    printf("Inorder: ");
     inorder(root);
+    printf("\n");
+    printf("Postorder: ");
+    postorder(root);
     printf("\n");
 }
