@@ -90,6 +90,7 @@ Node *create(Node *Start){
         if (Start==NULL)
         {
             newnode->next=NULL;
+            Start=newnode;
         }
         else
         {
@@ -223,6 +224,7 @@ void main(){
     scanf("%d",&(Start->data));
     Start=create(Start);
     display(Start);
+    printf("Here!");
     printf("\n");
     Start=delete_parts(Start,2,4);
     display(Start);
