@@ -9,17 +9,21 @@ typedef struct Queue{
 }Que;
 
 void enque(Que *q){
-    printf("What is the value you want to add?");
-    int num;
-    scanf("%d",&num);
-    printf("Enqueing \n");
-    if(q->front==(q->rear+1)%MAX){
-        printf("Overflow\n");
-        return;
+    printf("What do you want to add?:\n");
+    int item;
+    scanf("%d",&item);
+    if (q->front==(q->rear+1)%MAX)
+    {
+        printf("Overflow!\n");
     }
 
-    q->data[q->rear]=num;
-    q->rear=(q->rear++)/MAX;
+    if(q->front==-1 && q->rear==-1){
+        q->front = q->rear=0;
+    }
+    
+        q->data[q->rear]=item;
+        q->rear=(q->rear+1)%MAX;
+    
     return;
 }
 
@@ -36,12 +40,12 @@ int deque(Que *q){
         return item;
     }
     
-    q->front=q->front+1;
+    q->front=(q->front+1)%MAX;
     return item;
 }
 
 void display(Que *q){
-    printf("Displaying");
+    printf("Displaying:\n");
     int limit = q->rear;
     for (int i = q->front; i < limit; i++)
     {
@@ -51,8 +55,8 @@ void display(Que *q){
 }
 
 void initializ(Que *q){
-    q->front=0;
-    q->rear=0;
+    q->front=-1;
+    q->rear=-1;
 }
 
 int main(){

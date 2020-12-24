@@ -47,6 +47,8 @@ float pop(struct stack *s){
     return n;
 }
 
+
+
 float evaluate(char exp[100]){
     printf("evaluating\n");
     Stacks s;

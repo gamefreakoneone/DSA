@@ -1,90 +1,131 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-typedef struct polynode
+struct Node {
+    int coeff;
+    int pow;
+    struct Node* next;
+};
+ 
+// Function to create new node. Something is wrong I can feel it
+
+void create_node(int x, int y, struct Node** temp)
 {
-    int coeff;//info
-    int power; //info
-    struct polynode * next; //next
-} Node;
-
-Node * create(Node* Exp,int coef, int power){
-    printf("Creating\n");
-    Node *current, *temp;
-    current=Exp;
-    if(current==NULL){
-        temp=(Node *)malloc(sizeof(Node));
-        temp->coeff=coef;
-        temp->power=power;
-        temp->next=(Node *)malloc(sizeof(Node));
-        temp=temp->next;
-        current=temp;
-    }else{
-        temp=current;
-        while (temp->next!=NULL)
-        {
-            temp=temp->next;
-        }
-        temp->coeff=coef;
-        temp->power=power;
-        current->next=(Node *)malloc(sizeof(Node));
-        current=current->next;
-        current->next=NULL;
+    struct Node *r, *z;
+    z = *temp;
+    if (z == NULL) {
+        r = (struct Node*)malloc(sizeof(struct Node));
+        r->coeff = x;
+        r->pow = y;
+        *temp = r;
+        r->next = (struct Node*)malloc(sizeof(struct Node));
+        r = r->next;
+        r->next = NULL;
     }
-    return current;
-}
-
-void show( Node *node) 
-{ printf("display");
-while(node->next != NULL) 
-	{ 
-	printf("%dx^%d", node->coeff, node->power); 
-	node = node->next; 
-	if(node->next != NULL) 
-		printf(" + "); 
-	} 
-
-    printf("\n");
-} 
-
-Node * add(Node *poly1, Node *poly2, Node *poly){
-    while (poly1->next && poly2->next)
-    {
-        if(poly1->power>poly2->power){
-            poly->power=poly1->power;
-            poly->coeff=poly1->coeff;
-            poly1=poly1->next;
-        }else if (poly1->power<poly2->power)
-        {
-            poly->power=poly2->power;
-            poly->coeff=poly2->coeff;
-            poly2=poly2->next;
-        }else
-        {
-            poly->power=poly1->power;
-            poly->coeff=poly1->coeff+poly2->coeff;
-            poly1=poly1->next;
-            poly2=poly2->next;
-        }
-        return poly;
+    else {
+        r->coeff = x;
+        r->pow = y;
+        r->next = (struct Node*)malloc(sizeof(struct Node));
+        r = r->next;
+        r->next = NULL;
     }
-    
 }
-
-int main(){
-    Node * f_exp1=NULL, *f_exp2=NULL, *f_exp=NULL;
-    f_exp1=create(f_exp1,5,2);
-    f_exp1=create(f_exp1,2,1);
-    // f_exp1=create(f_exp1,6,0);
-    show(f_exp);
-
-    // f_exp2=create(f_exp2,8,3);
-    // f_exp2=create(f_exp2,5,1);
-    // f_exp2=create(f_exp2,2,0);
-    // show(f_exp2);
-
-    // f_exp=(struct polynode *)(malloc(sizeof(struct polynode)));
-    // f_exp=add(f_exp1,f_exp2,f_exp);
-    // show(f_exp);
-
+ 
+// Function Adding two polynomial numbers
+void polyadd(struct Node* poly1, struct Node* poly2,
+             struct Node* poly)
+{
+    while (poly1->next && poly2->next) {
+        // If power of 1st polynomial is greater then 2nd,
+        // then store 1st as it is and move its pointer
+        if (poly1->pow > poly2->pow) {
+            poly->pow = poly1->pow;
+            poly->coeff = poly1->coeff;
+            poly1 = poly1->next;
+        }
+ 
+        // If power of 2nd polynomial is greater then 1st,
+        // then store 2nd as it is and move its pointer
+        else if (poly1->pow < poly2->pow) {
+            poly->pow = poly2->pow;
+            poly->coeff = poly2->coeff;
+            poly2 = poly2->next;
+        }
+ 
+        // If power of both polynomial numbers is same then
+        // add their coefficients
+        else {
+            poly->pow = poly1->pow;
+            poly->coeff = poly1->coeff + poly2->coeff;
+            poly1 = poly1->next;
+            poly2 = poly2->next;
+        }
+ 
+        // Dynamically create new node
+        poly->next
+            = (struct Node*)malloc(sizeof(struct Node));
+        poly = poly->next;
+        poly->next = NULL;
+    }
+    while (poly1->next || poly2->next) {
+        if (poly1->next) {
+            poly->pow = poly1->pow;
+            poly->coeff = poly1->coeff;
+            poly1 = poly1->next;
+        }
+        if (poly2->next) {
+            poly->pow = poly2->pow;
+            poly->coeff = poly2->coeff;
+            poly2 = poly2->next;
+        }
+        poly->next
+            = (struct Node*)malloc(sizeof(struct Node));
+        poly = poly->next;
+        poly->next = NULL;
+    }
+}
+ 
+// Display Linked list
+void show(struct Node* node)
+{
+    while (node->next != NULL) {
+        printf("%dx^%d", node->coeff, node->pow);
+        node = node->next;
+        if (node->coeff >= 0) {
+            if (node->next != NULL)
+                printf("+");
+        }
+    }
+}
+ 
+// Driver code
+int main()
+{
+    struct Node *poly1 = NULL, *poly2 = NULL, *poly = NULL;
+ 
+    // Create first list of 5x^2 + 4x^1 + 2x^0
+    create_node(5, 2, &poly1);
+    create_node(4, 1, &poly1);
+    create_node(2, 0, &poly1);
+ 
+    // Create second list of -5x^1 - 5x^0
+    create_node(-5, 1, &poly2);
+    create_node(-5, 0, &poly2);
+ 
+    printf("1st Number: ");
+    show(poly1);
+ 
+    printf("\n2nd Number: ");
+    show(poly2);
+ 
+    poly = (struct Node*)malloc(sizeof(struct Node));
+ 
+    // Function add two polynomial numbers
+    polyadd(poly1, poly2, poly);
+ 
+    // Display resultant List
+    printf("\nAdded polynomial: ");
+    show(poly);
+ 
+    return 0;
 }
