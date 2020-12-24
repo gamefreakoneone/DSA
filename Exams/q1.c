@@ -32,6 +32,7 @@ struct Node * create_pol(struct Node * Base){
             newptr=(struct Node *)malloc(sizeof(struct Node));
             newptr->coef=data;
             newptr->power = power;
+            newptr->next=NULL;
             ptr = Base;
             while (ptr->next!=NULL)
             {
@@ -50,7 +51,7 @@ void display(struct Node * Base){
     ptr= Base;
     while (ptr!=NULL)
     {
-        printf(" \n ");
+        // printf(" \n ");
         printf(" (%dx^%d) ",ptr->coef,ptr->power);
         ptr=ptr->next;
         if(ptr->next!=NULL){
