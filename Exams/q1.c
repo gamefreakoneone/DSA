@@ -9,7 +9,7 @@ struct Node
 };
 
 struct Node * create_pol(struct Node * Base){
-    int data, power;
+    int data, power,exit=1;
     struct Node * newptr =NULL, *ptr = NULL;
     do
     {
@@ -40,29 +40,53 @@ struct Node * create_pol(struct Node * Base){
             }
             ptr->next=newptr;
         }
-    } while (data!=66);
+        printf("Do you want to continue?\n");
+        scanf("%d", &exit);
+    } while (exit!=0);
     return Base;
 }
 
 
 void display(struct Node * Base){
     printf("Displaying!\n");
-    struct Node *ptr;
-    ptr= Base;
-    while (ptr!=NULL)
+    struct Node *ptr =NULL;
+    ptr = Base;
+    while (ptr->next!=NULL)
     {
-        // printf(" \n ");
-        printf(" (%dx^%d) ",ptr->coef,ptr->power);
+        printf(" (%d x^ %d) ",ptr->coef,ptr->power);
         ptr=ptr->next;
-        if(ptr->next!=NULL){
-            printf("+");
+        printf("+");
+    }
+    printf(" (%d x^ %d) ",ptr->coef,ptr->power);
+}
+
+
+void sort(struct Node * Base){
+    int m,n;
+    struct Node * ptr ,* nxtptr;
+    for(ptr=Base;ptr!=NULL;ptr=ptr->next){
+        for (nxtptr = ptr->next; nxtptr!=NULL; nxtptr=nxtptr->next)
+        {
+            if (ptr->power<nxtptr->power)
+            {
+                m=ptr->power;
+                n=ptr->coef;
+                ptr->power=nxtptr->power;
+                ptr->coef=nxtptr->coef;
+                nxtptr->power=m;
+                nxtptr->coef=n;
+            }
         }
     }
 }
-
 
 void main(){
     struct Node * Base =NULL;
     Base=create_pol(Base);
     display(Base);
+    printf("\n");
+    sort(Base);
+    printf("\n");
+    display(Base);
+    printf("\n");
 }

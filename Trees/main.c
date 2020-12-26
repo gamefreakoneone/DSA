@@ -94,7 +94,8 @@ Node *delete (Node *root, int value)
     }else if (value>root->value)
     {
         return delete(root->right,value);
-    }else
+    }
+    else
     {
         if(root->left==NULL){
             temp=root->right;
@@ -110,7 +111,7 @@ Node *delete (Node *root, int value)
 
         root->value=temp->value;
 
-        root->right=delete(root->right, temp->value)
+        root->right=delete(root->right, temp->value);
     }
     return root;
 }
