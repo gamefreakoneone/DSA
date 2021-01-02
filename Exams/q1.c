@@ -46,6 +46,10 @@ struct Node * create_pol(struct Node * Base){
     return Base;
 }
 
+struct Node * add(struct Node * Base, struct Node * Base2){
+    struct Node * Answer = NULL;
+    while
+}
 
 void display(struct Node * Base){
     printf("Displaying!\n");
@@ -82,6 +86,7 @@ void sort(struct Node * Base){
 
 void main(){
     struct Node * Base =NULL;
+    struct Node * Base2 = NULL;
     Base=create_pol(Base);
     display(Base);
     printf("\n");
@@ -89,4 +94,11 @@ void main(){
     printf("\n");
     display(Base);
     printf("\n");
+    Base2 = create_pol(Base2);
+    sort(Base2);
+    printf("\n");
+    display(Base2);
+
+    struct Node * answer =NULL;
+    answer = add(Base, Base2);
 }
