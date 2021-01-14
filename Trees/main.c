@@ -8,16 +8,6 @@ typedef struct TreeNode
     struct TreeNode *right;
 } Node;
 
-Node *insert_node(int item)
-{
-    Node *temp;
-    temp = (Node *)malloc(sizeof(Node));
-    temp->value = item;
-    temp->left = NULL;
-    temp->right = NULL;
-    return temp;
-}
-
 void preorder(Node *root)
 {
     if (root != NULL)
@@ -48,101 +38,19 @@ void postorder(Node *root)
     }
 }
 
-int TotalNodes(Node *root)
-{
-    if (root == NULL)
-    {
-        return 0;
-    }
-    else
-    {
-        return (TotalNodes(root->left) + TotalNodes(root->right) + 1);
-    }
-}
-
-int height(Node *root)
-{
-    int leftheight, rightheight;
-    if (root == NULL)
-    {
-        return 0;
-    }
-    else
-    {
-        leftheight = height(root->left);
-        rightheight = height(root->right);
-        if (leftheight > rightheight)
-        {
-            return (leftheight + 1);
-        }
-        else
-        {
-            return (rightheight + 1);
-        }
-    }
-}
-
-Node *delete (Node *root, int value)
+Node *insert_node(int item)
 {
     Node *temp;
-    if (root==NULL){
-        return root;
-    }
-
-    if(value<root->value){
-        return delete(root->left,value);
-    }else if (value>root->value)
-    {
-        return delete(root->right,value);
-    }
-    else
-    {
-        if(root->left==NULL){
-            temp=root->right;
-            free(root);
-            return temp;
-        }else if(root->right==NULL){
-            temp=root->left;
-            free(root);
-            return temp;
-        }
-
-        temp=findsmallestelement(root->left);
-
-        root->value=temp->value;
-
-        root->right=delete(root->right, temp->value);
-    }
-    return root;
-}
-
-Node *findsmallestelement(Node *tree)
-{
-    if (tree == NULL || tree->left == NULL)
-    {
-        return tree;
-    }
-    else
-    {
-        return findsmallestelement(tree->left);
-    }
-}
-
-Node *findlargestelement(Node *tree)
-{
-    if (tree == NULL || tree->right == NULL)
-    {
-        return tree;
-    }
-    else
-    {
-        return findlargestelement(tree->right);
-    }
+    temp = (Node *)malloc(sizeof(Node));
+    temp->value = item;
+    temp->left = NULL;
+    temp->right = NULL;
+    return temp;
 }
 
 Node *createTree()
 {
-    Node * root;
+    Node *root;
     int values;
     printf("Give us the value:\n");
     scanf("%d", &values);
@@ -189,29 +97,132 @@ Node *createTree()
     return root;
 }
 
-Node * search(Node * root, int key){
-    if(root == NULL){
-    printf("Not found!");
+int TotalNodes(Node *root)
+{
+    if (root == NULL)
+    {
+        return 0;
+    }
+    else
+    {
+        return (TotalNodes(root->left) + TotalNodes(root->right) + 1);
+    }
+}
+
+int height(Node *root)
+{
+    int leftheight, rightheight;
+    if (root == NULL)
+    {
+        return 0;
+    }
+    else
+    {
+        leftheight = height(root->left);
+        rightheight = height(root->right);
+        if (leftheight > rightheight)
+        {
+            return (leftheight + 1);
+        }
+        else
+        {
+            return (rightheight + 1);
+        }
+    }
+}
+
+
+Node *delete (Node *root, int value)
+{
+    Node *temp;
+    if (root == NULL)
+    {
+        return root;
+    }
+
+    if (value < root->value)
+    {
+        return delete (root->left, value);
+    }
+    else if (value > root->value)
+    {
+        return delete (root->right, value);
+    }
+    else
+    {
+        if (root->left == NULL)
+        {
+            temp = root->right;
+            free(root);
+            return temp;
+        }
+        else if (root->right == NULL)
+        {
+            temp = root->left;
+            free(root);
+            return temp;
+        }
+
+        temp = findsmallestelement(root->left);
+
+        root->value = temp->value;
+
+        root->right = delete (root->right, temp->value);
+    }
+    return root;
+}
+
+Node *findsmallestelement(Node *tree)
+{
+    if (tree == NULL || tree->left == NULL)
+    {
+        return tree;
+    }
+    else
+    {
+        return findsmallestelement(tree->left);
+    }
+}
+
+Node *findlargestelement(Node *tree)
+{
+    if (tree == NULL || tree->right == NULL)
+    {
+        return tree;
+    }
+    else
+    {
+        return findlargestelement(tree->right);
+    }
+}
+
+Node *search(Node *root, int key)
+{
+    if (root == NULL)
+    {
+        printf("Not found!");
         return NULL;
     }
 
-    if (root->value==key){
+    if (root->value == key)
+    {
         printf("Found the root! %d ", root->value);
         return root;
     }
 
-    if(key>root->value){
-        return search(root->right,key);
+    if (key > root->value)
+    {
+        return search(root->right, key);
     }
 
-    return search(root->left,key);
+    return search(root->left, key);
 }
 
 int main()
 {
     Node *root;
-    root=createTree();
-    
+    root = createTree();
+
     printf("Preorder: ");
     preorder(root);
     printf("\n");
@@ -223,13 +234,13 @@ int main()
     printf("\n");
     int numberofNodes = TotalNodes(root);
     printf("%d is the total number of nodes!\n", numberofNodes);
-    printf("%d is the height of the tree.\n",height(root));
-    printf("%d is the largest of the tree.\n",findlargestelement(root)->value);
-    printf("%d is the smallest element of the tree.\n",findsmallestelement(root)->value);
+    printf("%d is the height of the tree.\n", height(root));
+    printf("%d is the largest of the tree.\n", findlargestelement(root)->value);
+    printf("%d is the smallest element of the tree.\n", findsmallestelement(root)->value);
 
-int pls;
-    Node * result;
+    int pls;
+    Node *result;
     printf("what do you want to search?\n");
-    scanf("%d",&pls);
-    result=search(root, pls);
+    scanf("%d", &pls);
+    result = search(root, pls);
 }
