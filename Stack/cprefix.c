@@ -1,92 +1,61 @@
 #include <stdio.h>
 #include <conio.h>
 #include <ctype.h>
-#include <string.h>
 #define MAX 100
-char st[MAX];
+float st[MAX];
 int top =–1;
-void push(char st[], char);
-char pop(char st[]);
-void InfixtoPostfix(char source[], char target[]);
-int getPriority(char);
+void push(float st[], float val);
+float pop(float st[]);
+float evaluatePostfixExp(char exp[]);
 int main()
 {
-    char infix[100], postfix[100];
+    float val;
+    char exp[100];
     clrscr();
-    printf("\n Enter any infix expression : ");
-    gets(infix);
-    strcpy(postfix, "");
-    InfixtoPostfix(infix, postfix);
-    printf("\n The corresponding postfix expression is : ");
-    puts(postfix);
+    printf("\n Enter any postfix expression : ");
+    gets(exp);
+    val = evaluatePostfixExp(exp);
+    printf("\n Value of the postfix expression = %.2f", val);
     getch();
     return 0;
 }
-void InfixtoPostfix(char source[], char target[])
+float evaluatePostfixExp(char exp[])
 {
-    int i = 0, j = 0;
-    char temp;
-    strcpy(target, "");
-    while (source[i] != '\0')
+    int i = 0;
+    float op1, op2, value;
+    while (exp[i] != '\0')
     {
-        if (source[i] == '(')
-        {
-            push(st, source[i]);
-            i++;
-        }
-        else if (source[i] == ')')
-        {
-            while ((top !=–1) && (st[top] != '('))
-            {
-                target[j] = pop(st);
-                j++;
-            }
-            if (top ==–1)
-            {
-                printf("\n INCORRECT EXPRESSION");
-                exit(1);
-            }
-            temp = pop(st); //remove left parenthesis
-            i++;
-        }
-        else if (isdigit(source[i]) || isalpha(source[i]))
-        {
-            target[j] = source[i];
-            j++;
-            i++;
-        }
-        else if (source[i] == '+' || source[i] == '–' || source[i] == '*' ||
-                 source[i] == '/' || source[i] == '%')
-        {
-            while ((top !=–1) && (st[top] != '(') && (getPriority(st[top]) > getPriority(source[i])))
-            {
-                target[j] = pop(st);
-                j++;
-            }
-            push(st, source[i]);
-            i++;
-        }
+        if (isdigit(exp[i]))
+            push(st, (float)(exp[i]–'0'));
         else
         {
-            printf("\n INCORRECT ELEMENT IN EXPRESSION");
-            exit(1);
+            op2 = pop(st);
+            op1 = pop(st);
+            switch (exp[i])
+            {
+            case '+':
+                value = op1 + op2;
+                break;
+            case '–':
+                value = op1 – op2;
+                break;
+            case '/':
+                value = op1 / op2;
+                break;
+            case '*':
+                value = op1 * op2;
+                break;
+            case '%':
+                value = (int)op1 % (int)op2;
+                break;
+            }
+            push(st, value);
         }
+        i++;
     }
-    while ((top !=–1) && (st[top] != '('))
-    {
-        target[j] = pop(st);
-        j++;
-    }
-    target[j] = '\0';
+    return (pop(st));
 }
-int getPriority(char op)
-{
-    if (op == '/' || op == '*' || op == '%')
-        return 1;
-    else if (op == '+' || op == '–')
-        return 0;
-}
-void push(char st[], char val)
+void push(float st[], float val)
 {
     if (top == MAX–1)
         printf("\n STACK OVERFLOW");
@@ -96,9 +65,9 @@ void push(char st[], char val)
         st[top] = val;
     }
 }
-char pop(char st[])
+float pop(float st[])
 {
-    char val = ' ';
+    float val =–1;
     if (top ==–1)
         printf("\n STACK UNDERFLOW");
     else
