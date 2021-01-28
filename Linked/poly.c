@@ -6,8 +6,46 @@ struct Node {
     int pow;
     struct Node* next;
 };
- 
-// Function to create new node. Something is wrong I can feel it
+
+struct Node *create_poly(struct Node *start)
+{
+    struct Node *new_node, *ptr;
+    int n, c;
+    printf("\n Enter the power (To exit type -1) : ");
+    scanf("%d", &n);
+    printf("\nEnter its coefficient : ");
+    scanf("%d", &c);
+    while (n != -1)
+    {
+        if (start == NULL)
+        {
+            new_node = (struct Node *)malloc(sizeof(struct Node));
+            new_node->pow = n;
+            new_node->coeff = c;
+            new_node->next = NULL;
+            start = new_node;
+        }
+        else
+        {
+            ptr = start;
+            while (ptr->next != NULL)
+                ptr = ptr->next;
+            new_node = (struct Node *)malloc(sizeof(struct Node));
+            new_node->pow = n;
+            new_node->coeff = c;
+            new_node->next = NULL;
+            ptr->next = new_node;
+        }
+        printf("\n Enter the power : ");
+        scanf("%d", &n);
+        if (n == -1)
+            break;
+        printf("\n Enter its coefficient : ");
+        scanf("%d", &c);
+    }
+    return start;
+}
+
 
 void create_node(int x, int y, struct Node** temp)
 {
@@ -61,7 +99,7 @@ void polyadd(struct Node* poly1, struct Node* poly2,
             poly2 = poly2->next;
         }
  
-        // Dynamically create new node
+        // Dynamically create new Node
         poly->next
             = (struct Node*)malloc(sizeof(struct Node));
         poly = poly->next;
@@ -96,21 +134,22 @@ void show(struct Node* node)
                 printf("+");
         }
     }
+    printf("+%dx^%d", node->coeff, node->pow);
 }
  
-// Driver code
 int main()
 {
     struct Node *poly1 = NULL, *poly2 = NULL, *poly = NULL;
- 
-    // Create first list of 5x^2 + 4x^1 + 2x^0
-    create_node(5, 2, &poly1);
-    create_node(4, 1, &poly1);
-    create_node(2, 0, &poly1);
+    int power;
+    poly1 = create_poly(poly1);
+    poly2 = create_poly(poly2);
+    // create_node(5, 2, &poly1);
+    // create_node(4, 1, &poly1);
+    // create_node(2, 0, &poly1);
  
     // Create second list of -5x^1 - 5x^0
-    create_node(-5, 1, &poly2);
-    create_node(-5, 0, &poly2);
+    // create_node(-5, 1, &poly2);
+    // create_node(-5, 0, &poly2);
  
     printf("1st Number: ");
     show(poly1);

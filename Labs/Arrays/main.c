@@ -191,6 +191,7 @@ int main()
         case 7:
             printf("Thank you!");
             true = 0;
+            break;
         default:
             printf("Soemthing went wrong");
             break;
