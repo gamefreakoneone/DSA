@@ -1,10 +1,10 @@
 #include <stdio.h>
-#include <conio.h>
+
 #include <ctype.h>
 #include <string.h>
 #define MAX 100
 char st[MAX];
-int top =–1;
+int top = -1;
 void push(char st[], char);
 char pop(char st[]);
 void InfixtoPostfix(char source[], char target[]);
@@ -38,12 +38,12 @@ void InfixtoPostfix(char source[], char target[])
         }
         else if (source[i] == ')')
         {
-            while ((top !=–1) && (st[top] != '('))
+            while ((top != -1) && (st[top] != '('))
             {
                 target[j] = pop(st);
                 j++;
             }
-            if (top ==–1)
+            if (top == -1)
             {
                 printf("\n INCORRECT EXPRESSION");
                 exit(1);
@@ -57,10 +57,10 @@ void InfixtoPostfix(char source[], char target[])
             j++;
             i++;
         }
-        else if (source[i] == '+' || source[i] == '–' || source[i] == '*' ||
+        else if (source[i] == '+' || source[i] == '-' || source[i] == '*' ||
                  source[i] == '/' || source[i] == '%')
         {
-            while ((top !=–1) && (st[top] != '(') && (getPriority(st[top]) > getPriority(source[i])))
+            while ((top != -1) && (st[top] != '(') && (getPriority(st[top]) > getPriority(source[i])))
             {
                 target[j] = pop(st);
                 j++;
@@ -74,7 +74,7 @@ void InfixtoPostfix(char source[], char target[])
             exit(1);
         }
     }
-    while ((top !=–1) && (st[top] != '('))
+    while ((top != -1) && (st[top] != '('))
     {
         target[j] = pop(st);
         j++;
@@ -86,12 +86,12 @@ int getPriority(char op)
 {
     if (op == '/' || op == '*' || op == '%')
         return 1;
-    else if (op == '+' || op == '–')
+    else if (op == '+' || op == '-')
         return 0;
 }
 void push(char st[], char val)
 {
-    if (top == MAX–1)
+    if (top == MAX - 1)
         printf("\n STACK OVERFLOW");
     else
     {
@@ -102,12 +102,12 @@ void push(char st[], char val)
 char pop(char st[])
 {
     char val = ' ';
-    if (top ==–1)
+    if (top == -1)
         printf("\n STACK UNDERFLOW");
     else
     {
         val = st[top];
-        top––;
+        top--;
     }
     return val;
 }

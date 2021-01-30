@@ -1,91 +1,136 @@
-struct Node { 
-    int data; 
-    struct Node* link; 
-}; 
-  
-struct Queue { 
-    struct Node *front, *rear; 
-}; 
-  
-// Function to create Circular queue 
-void enQueue(Queue* q, int value) 
-{ 
-    struct Node* temp = new Node; 
-    temp->data = value; 
-    if (q->front == NULL) 
-        q->front = temp; 
-    else
-        q->rear->link = temp; 
-  
-    q->rear = temp; 
-    q->rear->link = q->front; 
-} 
-  
-// Function to delete element from Circular Queue 
-int deQueue(Queue* q) 
-{ 
-    if (q->front == NULL) { 
-        printf("Queue is empty"); 
-        return INT_MIN; 
-    } 
-  
-    // If this is the last node to be deleted 
-    int value; // Value to be dequeued 
-    if (q->front == q->rear) { 
-        value = q->front->data; 
-        free(q->front); 
-        q->front = NULL; 
-        q->rear = NULL; 
-    } 
-    else // There are more than one nodes 
-    { 
-        struct Node* temp = q->front; 
-        value = temp->data; 
-        q->front = q->front->link; 
-        q->rear->link = q->front; 
-        free(temp); 
-    } 
-  
-    return value; 
-} 
-  
-// Function displaying the elements of Circular Queue 
-void displayQueue(struct Queue* q) 
-{ 
-    struct Node* temp = q->front; 
-    printf("\nElements in Circular Queue are: "); 
-    while (temp->link != q->front) { 
-        printf("%d ", temp->data); 
-        temp = temp->link; 
-    } 
-    printf("%d", temp->data); 
-} 
-  
-/* Driver of the program */
-int main() 
-{ 
-    // Create a queue and initialize front and rear 
-    Queue* q = new Queue; 
-    q->front = q->rear = NULL; 
-  
-    // Inserting elements in Circular Queue 
-    enQueue(q, 14); 
-    enQueue(q, 22); 
-    enQueue(q, 6); 
-  
-    // Display elements present in Circular Queue 
-    displayQueue(q); 
-  
-    // Deleting elements from Circular Queue 
-    printf("\nDeleted value = %d", deQueue(q)); 
-    printf("\nDeleted value = %d", deQueue(q)); 
-  
-    // Remaining elements in Circular Queue 
-    displayQueue(q); 
-  
-    enQueue(q, 9); 
-    enQueue(q, 20); 
-    displayQueue(q); 
-  
-    return 0; 
-} 
+#include<stdio.h>
+#include<stdlib.h>
+ 
+struct node
+{
+        int info;
+        struct node *link;
+}*rear=NULL;
+ 
+void insert(int item);
+int del();
+void display();
+int isEmpty();
+int peek();
+ 
+int main()
+{
+        int choice,item;
+        while(1)
+        {
+                printf("\n1.Insert\n");
+                printf("2.Delete\n");
+                printf("3.Peek\n");
+                printf("4.Display\n");
+                printf("5.Quit\n");
+                printf("\nEnter your choice : ");
+                scanf("%d",&choice);
+ 
+                switch(choice)
+                {
+                 case 1:
+                        printf("\nEnter the element for insertion : ");
+                        scanf("%d",&item);
+                        insert(item);
+                        break;
+                 case 2:
+                        printf("\nDeleted element is %d\n",del());
+                        break;
+                 case 3:
+                        printf("\nItem at the front of queue is %d\n",peek());
+                        break;
+                 case 4:
+                        display();
+                        break;
+                 case 5:
+                        exit(1);
+                 default:
+                        printf("\nWrong choice\n");
+                }/*End of switch*/
+        }/*End of while*/
+}/*End of main()*/
+ 
+void insert(int item)
+{
+        struct node *tmp;
+        tmp=(struct node *)malloc(sizeof(struct node));
+        tmp->info=item;
+        if(tmp==NULL)
+        {
+                printf("\nMemory not available\n");
+                return;
+        }
+ 
+        if( isEmpty() ) /*If queue is empty */
+        {
+                rear=tmp;
+                tmp->link=rear;
+        }
+        else
+        {
+                tmp->link=rear->link;
+                rear->link=tmp;
+                rear=tmp;
+        }
+}/*End of insert()*/
+ 
+del()
+{
+        int item;
+        struct node *tmp;
+        if( isEmpty() )
+        {
+                printf("\nQueue underflow\n");
+                exit(1);
+        }
+        if(rear->link==rear)  /*If only one element*/
+        {
+                tmp=rear;
+                rear=NULL;
+        }
+        else
+        {
+                tmp=rear->link;
+                rear->link=rear->link->link;
+        }
+        item=tmp->info;
+        free(tmp);
+        return item;
+}/*End of del()*/
+ 
+int peek()
+{
+        if( isEmpty() )
+        {
+                printf("\nQueue underflow\n");
+                exit(1);
+        }
+        return rear->link->info;
+}/* End of peek() */
+ 
+int isEmpty()
+{
+        if( rear == NULL )
+                return 1;
+        else
+                return 0;
+}/*End of isEmpty()*/
+ 
+ 
+void display()
+{
+        struct node *p;
+        if(isEmpty())
+        {
+                printf("\nQueue is empty\n");
+                return;
+        }
+        printf("\nQueue is :\n");
+        p=rear->link;
+        do
+        {
+                printf("%d ",p->info);
+                p=p->link;
+        }while(p!=rear->link);
+        printf("\n");
+}/*End of display()*/
