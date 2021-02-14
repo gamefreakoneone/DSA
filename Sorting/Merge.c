@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #define size 6
+
+
 void merge(int arr[], int beg, int mid, int end)
 {
     int i = beg, j = mid + 1, index = beg, temp[size], k;
@@ -52,13 +54,18 @@ void merge_sort(int *a, int beg, int end)
     }
 }
 
-int main()
-{
-    int a[] = {12, 2, 8, 5, 6, 1};
-    int n = 6;
-    merge_sort(a, 0, 6);
-    for (int i = 0; i < n; i++)
+void display(int *a, int n){
+for (int i = 0; i < n; i++)
     {
         printf(" %d ", a[i]);
     }
+}
+
+
+int main()
+{
+    int a[] = {12, 21, 8124, 5, 6, 1};
+    int n = 6;
+    merge_sort(a, 0, 6);
+    display(a,n);
 }

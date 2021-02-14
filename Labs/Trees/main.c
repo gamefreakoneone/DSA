@@ -92,6 +92,7 @@ Node *createTree()
             else
             {
                 printf("Duplicate value\n");
+                exit(1);
                 break;
             }
         }
@@ -109,40 +110,39 @@ Node *createTree()
     return root;
 }
 
-int TotalNodes(Node *root)
-{
-    if (root == NULL)
-    {
-        return 0;
-    }
-    else
-    {
-        return (TotalNodes(root->left) + TotalNodes(root->right) + 1);
-    }
-}
-
-int height(Node *root)
-{
-    int leftheight, rightheight;
-    if (root == NULL)
-    {
-        return 0;
-    }
-    else
-    {
-        leftheight = height(root->left);
-        rightheight = height(root->right);
-        if (leftheight > rightheight)
+Node * insertion(Node * root){
+        int item;
+        Node *current, *parent = NULL;
+        current = root;
+        printf("Give value:\n");
+        scanf("%d", &item);
+        while (current != NULL)
         {
-            return (leftheight + 1);
+            parent = current;
+            if (item < parent->value)
+            {
+                current = parent->left;
+            }
+            else if (item > parent->value)
+            {
+                current = parent->right;
+            }
+            else
+            {
+                printf("Duplicate value\n");
+                break;
+            }
         }
-        else
+        if (item < parent->value)
         {
-            return (rightheight + 1);
+            parent->left = insert_node(item);
         }
-    }
+        else if (item > parent->value)
+        {
+            parent->right = insert_node(item);
+        }
+        return root;
 }
-
 
 Node *delete (Node *root, int value)
 {
@@ -212,13 +212,13 @@ Node *search(Node *root, int key)
 {
     if (root == NULL)
     {
-        printf("Not found!");
+        printf("Not found!\n");
         return NULL;
     }
 
     if (root->value == key)
     {
-        printf("Found the root! %d ", root->value);
+        printf("Found the root! %d \n", root->value);
         return root;
     }
 
@@ -233,26 +233,86 @@ Node *search(Node *root, int key)
 int main()
 {
     Node *root;
-    root = createTree();
-
-    printf("Preorder: ");
-    preorder(root);
-    printf("\n");
-    printf("Inorder: ");
-    inorder(root);
-    printf("\n");
-    printf("Postorder: ");
-    postorder(root);
-    printf("\n");
-    int numberofNodes = TotalNodes(root);
-    printf("%d is the total number of nodes!\n", numberofNodes);
-    printf("%d is the height of the tree.\n", height(root));
-    printf("%d is the largest of the tree.\n", findlargestelement(root)->value);
-    printf("%d is the smallest element of the tree.\n", findsmallestelement(root)->value);
-
-    int pls;
     Node *result;
-    printf("what do you want to search?\n");
-    scanf("%d", &pls);
-    result = search(root, pls);
+    printf("Let us create a Tree:\n");
+    root = createTree();
+    int truth = 1, option, pls;
+    while (truth == 1)
+    {
+        printf("What do you want to do:\n");
+        printf("1.)Traverse Preorder\n");
+        printf("2.)Traverse Inorder\n");
+        printf("3.)Traverse Postorder\n");
+        printf("4.)Search\n");
+        printf("5.)Largest Element:\n");
+        printf("6.)Smallest Element:\n");
+        printf("7.)Delete a node\n");
+        printf("8.)Insertion of a node\n");
+        printf("9.)Exit\n");
+        printf("What do you want to do: \n");
+        scanf("%d", &option);
+
+        switch (option)
+        {
+        case 1:
+            printf("Preorder: ");
+            preorder(root);
+            printf("\n");
+            break;
+        case 2:
+            printf("Inorder: ");
+            inorder(root);
+            printf("\n");
+            break;
+        case 3:
+            printf("Postorder: ");
+            postorder(root);
+            printf("\n");
+            break;
+        case 4:
+            printf("what do you want to search?\n");
+            scanf("%d", &pls);
+            result = search(root, pls);
+            break;
+        case 5:
+            printf("%d is the largest of the tree.\n", findlargestelement(root)->value);
+            break;
+        case 6:
+            printf("%d is the smallest element of the tree.\n", findsmallestelement(root)->value);
+            break;
+        case 7:
+            printf("What would you like to delete:\n");
+            scanf("%d", &pls);
+            root = delete (root, pls);
+            break;
+        case 8:
+            root = insertion(root);
+            break;
+        case 9:
+            printf("Done!");
+            exit(1);
+        default:
+            printf("Something went wrong!\n");
+            break;
+        }
+    }
+
+    // printf("Preorder: ");
+    // preorder(root);
+    // printf("\n");
+    // printf("Inorder: ");
+    // inorder(root);
+    // printf("\n");
+    // printf("Postorder: ");
+    // postorder(root);
+    // printf("\n");
+    // int numberofNodes = TotalNodes(root);
+    // printf("%d is the total number of nodes!\n", numberofNodes);
+    // printf("%d is the height of the tree.\n", height(root));
+    // printf("%d is the largest of the tree.\n", findlargestelement(root)->value);
+    // printf("%d is the smallest element of the tree.\n", findsmallestelement(root)->value);
+
+    // printf("what do you want to search?\n");
+    // scanf("%d", &pls);
+    // result = search(root, pls);
 }
